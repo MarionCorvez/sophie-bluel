@@ -8,7 +8,7 @@
 - Étape 1.1 : Récupération des travaux depuis le back-end
 - Étape 1.2 : Réalisation du filtre des travaux
 
-2. [ ] Étape 2 : Codez la page de connexion
+2. [X] Étape 2 : Codez la page de connexion
 - Étape 2.1 : Intégration du design de la page de formulaire
 - Étape 2.2 : Authentification de l'utilisateur
 

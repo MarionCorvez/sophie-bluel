@@ -3,7 +3,7 @@
  */
 
 import { createWorksWrapper, createCategoriesWrapper } from './templates.js';
-
+import { isLoggedIn, logOut } from './usermode.js';
 
 /**
  * @summary Déclaration des principales variables
@@ -66,3 +66,11 @@ function filterCategories() {
         })
     })
 }
+
+
+
+// Modification de l'interface en fonction de l'état de connexion
+isLoggedIn();
+
+// Fonction qui supprime le token au clic sur le lien "login / logout"
+logOut();

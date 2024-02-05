@@ -11,6 +11,11 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<div class="editor-mode">
+	<div class="mode-edition__wrapper">
+		<p>Mode édition</p>
+	</div>
+</div>
 <header>
 	<a href="index.html">
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
@@ -22,7 +27,7 @@
 			<li>
 				<a href="#contact">contact</a></li>
 			<li>
-				<a href="#">login</a></li>
+				<a href="./pages/login.html" id="login__label">login</a></li>
 			<li>
 				<a href="#">
 					<img src="assets/icons/instagram.png" alt="Instagram">
@@ -44,8 +49,13 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
-		<div class="filters">
+		<div class="portfolio__heading">
+			<h2>Mes Projets</h2>
+			<p class="editor-mode">Modifier</p>
+		</div>
+		<div class="visitor-mode">
+			<div class="filters">
+			</div>	
 		</div>
 		<div class="gallery">
 		</div>
