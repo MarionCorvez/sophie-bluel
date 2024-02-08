@@ -42,7 +42,7 @@ fetchCategories(); // Appel de la fonction fetchCategories
  */
 
 function filterCategories() {
-    const filters = document.querySelectorAll(".filter"); // Sélection de tous les boutons
+    const filters = document.querySelectorAll(".filters__cta"); // Sélection de tous les boutons
 
     filters.forEach(filter => { // Ajout d'un EventListener sur chaque bouton
 
@@ -74,3 +74,75 @@ isLoggedIn();
 
 // Fonction qui supprime le token au clic sur le lien "login / logout"
 logOut();
+
+
+/**
+ * @summary Ouverture et fermeture de la modale
+ */
+
+const modal = document.querySelector(".modal");
+const openModal = document.querySelector(".modal--open");
+const closeModal = document.querySelector(".modal__nav--close");
+
+openModal.addEventListener("click", () => {
+  modal.showModal();
+});
+
+closeModal.addEventListener("click", () => {
+  modal.close();
+});
+
+// @https://blog.webdevsimplified.com/
+modal.addEventListener("click", (e) => {
+  const modalDimensions = modal.getBoundingClientRect();
+  if ( // Détection du clic en dehors de la modale
+    e.clientX < modalDimensions.left ||
+    e.clientX > modalDimensions.right ||
+    e.clientY < modalDimensions.top ||
+    e.clientY > modalDimensions.bottom
+  ) {
+    modal.close();
+  }
+});
+
+
+/**
+ * @summary Gestion du passage d'une page de la modale à l'autre
+ */
+
+let page1Items = document.querySelectorAll(".modal__page--1"); 
+let page2Items = document.querySelectorAll(".modal__page--2");
+let modalHeading = document.querySelector(".modal__heading");
+const buttonBack = document.querySelector(".modal__nav--back");
+const buttonAddProject = document.getElementById("add-project");
+
+buttonAddProject.addEventListener("click", () => {
+  buttonBack.style.display = "block";
+  modalHeading.textContent = "Ajout photo"; // Le titre est modifié
+  page2Items.forEach(page2Item => { // Le contenu de la page 2 est affiché
+    page2Item.style.display = "block";
+  });
+  page1Items.forEach(page1Item => { // Le contenu de la page 1 est masqué
+    page1Item.style.display = "none";
+  });  
+});
+
+buttonBack.addEventListener("click", () => {
+  modalHeading.textContent = "Galerie photo"; // Le titre est modifié
+  buttonBack.style.display = "none";
+  page1Items.forEach(page1Item => { // Le contenu de la page 1 est affiché
+    page1Item.style.display = "block";
+  }); 
+
+  page2Items.forEach(page2Item => { // Le contenu de la page 2 est masqué
+    page2Item.style.display = "none";
+  });
+});
+
+// !! Ne fonctionne pas !!
+// Ferme la modale au clic
+// Test sans l'attribut disabled
+const saveProject = document.getElementById("save-project"); // Récupération du CTA
+saveProject.addEventListener("submit", (event) => {
+  event.preventDefault(); // On empêche le comportement par défaut
+});

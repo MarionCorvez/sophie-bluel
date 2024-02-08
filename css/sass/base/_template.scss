@@ -4,18 +4,98 @@
   ========================================
 */
 
+%flex--center {
+	display: flex;
+	justify-content: center;
+}
+
+%flex-a--center {
+	display: flex;
+	align-items: center;
+}
+
+.screen-main {
+	max-width: 1140px;
+	margin: 0 auto;
+}
+
+.screen-inner {
+	max-width: 1040px;
+	margin: 50px auto;
+}
+
+
+// Header
+
+header {
+	display: flex;
+	justify-content: space-between;
+	padding: 50px 40px;
+}
+
+
+// Navigation
+
+nav {
+	& ul {
+		@extend %flex-a--center;
+		list-style-type: none;
+	}
+
+	& li {
+		padding-left: 44px;
+		font-size: 1.2em;
+		& a:hover {
+			color: #B1663C;
+		}
+	}
+}
+
+
+// Introduction
+
+#introduction {
+	@extend %flex-a--center;
+	gap: 72px;
+	padding-bottom: 90px;
+
+	& figure {
+		flex: 1
+	}
+	& img {
+		display: block;
+		margin: auto;
+	}
+	& article {
+		flex: 1
+	}
+	& h2 {
+		margin-bottom: 1em;
+	}
+	& p {
+		margin-bottom: 0.5em;
+	}
+}
+
+article p::selection,
+figcaption::selection {
+	color: #B1663C;
+}
 
 
 // Footer
 
 footer {
-	height: 60px;
 	background-color: #fff;
-	padding: 24px 107px 20px 0;
+	padding: 24px 0;
+
+	& nav ul {
+		display: flex;
+		justify-content: flex-end;
+		margin: 2em
+	}
 }
 
-footer nav ul {
-	display: flex;
-	justify-content: flex-end;
-	margin: 2em
+.footer-login {
+	margin-top: 300px;
 }

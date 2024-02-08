@@ -27,6 +27,6 @@ export function isLoggedIn() {
 
 export function logOut() {
   navLabel.addEventListener("click", () => {
-      sessionStorage.removeItem("token");
+    sessionStorage.removeItem("token");
   })
 };

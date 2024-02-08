@@ -42,7 +42,7 @@ export function createCategoriesWrapper(categories) {
   const defaultCategory = document.createElement("button");
   defaultCategory.innerText = "Tous";
   // Assignation d'une class "filter"
-  defaultCategory.classList.add("filter", "active");
+  defaultCategory.classList.add("cta", "filters__cta", "active");
   sectionCategories.appendChild(defaultCategory);
 
   for (let i = 0; i < categories.length; i++) {
@@ -51,7 +51,7 @@ export function createCategoriesWrapper(categories) {
     // Création d'une balise dédiée à une catégorie
     const titleCategory = document.createElement("button");
     // Assignation d'une class "filter"
-    titleCategory.classList.add("filter");
+    titleCategory.classList.add("cta", "filters__cta");
     titleCategory.innerText = category.name;
     titleCategory.id = category.name;
     // Association de la balise button à la liste des catégories
