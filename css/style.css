@@ -301,8 +301,11 @@ select {
   color: #fff;
   background-color: #1D6154;
 }
-.cta:hover, .cta:focus {
+.cta:hover {
   background-color: #0E2F28;
+}
+.cta:focus-visible {
+  outline: none;
 }
 
 .filters__cta {
@@ -339,6 +342,7 @@ select {
 .modal__cta:disabled {
   width: 237px;
   background-color: #A7A7A7;
+  cursor: default;
 }
 
 /* Login */
@@ -474,6 +478,16 @@ select {
   margin-top: 47px;
   padding-top: 32px;
   border-top: 2px solid #b3b3b3;
+}
+.modal-add__message {
+  display: none;
+  padding-top: 21px;
+}
+.modal-add__message--ok {
+  color: #1D6154;
+}
+.modal-add__message--error {
+  color: #B1663C;
 }
 
 .photo-upload {

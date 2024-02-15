@@ -75,9 +75,12 @@ select {
 	color: #fff;
 	background-color: #1D6154;
 
-	&:hover,
-	&:focus {
+	&:hover {
 		background-color: #0E2F28;
+	}
+
+	&:focus-visible {
+		outline: none;
 	}
 }
 
@@ -117,6 +120,7 @@ select {
 	&:disabled {
 		width: 237px;
 		background-color: #A7A7A7;
+		cursor: default;
 	}
 }
 

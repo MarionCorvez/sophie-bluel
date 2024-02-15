@@ -4,30 +4,42 @@
 
 export function createWorksWrapper(works) {
 
-  for (let i = 0; i < works.length; i++) {
-      // Récupération de chaque item du tableau works
-      const article = works[i];
-      // Récupération de l'élément du DOM qui accueillera les projets
-      const sectionWorks = document.querySelector(".gallery");
-      // Création d'une balise dédiée à un projet
-      const containerElement = document.createElement("figure");
-      // Création d'un ID qui reprend l'ID de la catégorie
-      containerElement.id = article.categoryId;
-      // Création de l'élément img 
-      const imageElement = document.createElement("img");
-      imageElement.src = article.imageUrl;
-      imageElement.setAttribute("alt", article.title);
-      // Création de l'élément figcaption
-      const titleElement = document.createElement("figcaption");
-      titleElement.innerText = article.title;
-      // On rattache la balise figure à la section des projets
-      sectionWorks.appendChild(containerElement);
-      // On rattache l'image à containerElement (la balise figure)
-      containerElement.appendChild(imageElement);
-      // Association du titre du projet à containerElement
-      containerElement.appendChild(titleElement);
-   }
-}
+  // nouvelle syntaxe
+  works.map((work) => {
+
+    // Portfolio section
+    const portfolioSection = document.querySelector(".gallery");
+    const portfolioFigure = document.createElement("figure");
+    portfolioFigure.id = work.categoryId;
+    const portfolioImage = document.createElement("img");
+    portfolioImage.src = work.imageUrl;
+    portfolioImage.setAttribute("alt", work.title);
+    const portfolioFigcaption = document.createElement("figcaption");
+    portfolioFigcaption.innerText = work.title;
+    portfolioSection.appendChild(portfolioFigure);
+    portfolioFigure.appendChild(portfolioImage);
+    portfolioFigure.appendChild(portfolioFigcaption);
+
+    // Modal section
+    const modalSection = document.querySelector(".modal-delete__gallery");
+    const modalFigure = document.createElement("figure");
+    const modalImage = document.createElement("img");
+    modalImage.src = work.imageUrl;
+    modalImage.setAttribute("alt", work.title);
+    modalImage.classList.add("modal-delete__image");
+    const modalTrashWrapper = document.createElement("span");
+    modalTrashWrapper.classList.add("modal-delete__icon");
+    const modalTrashIcon = document.createElement("img");
+    modalTrashIcon.src = "assets/icons/trash.svg";
+    modalTrashIcon.classList.add("modal-delete__trash");
+    modalTrashIcon.id = work.categoryId;
+    modalTrashIcon.setAttribute("alt", "Icône pour supprimer un projet");
+    modalSection.appendChild(modalFigure);
+    modalFigure.appendChild(modalImage);
+    modalFigure.appendChild(modalTrashWrapper);
+    modalTrashWrapper.appendChild(modalTrashIcon);
+  });
+} 
 
 
 /**
@@ -36,25 +48,33 @@ export function createWorksWrapper(works) {
 
 export function createCategoriesWrapper(categories) {
 
-  // Récupération de l'élément du DOM qui accueillera les catégories
-  const sectionCategories = document.querySelector(".filters");
-  // Création d'un bouton "Tous"
+  // Filters section
+  const filtersCategories = document.querySelector(".filters");
   const defaultCategory = document.createElement("button");
   defaultCategory.innerText = "Tous";
-  // Assignation d'une class "filter"
   defaultCategory.classList.add("cta", "filters__cta", "active");
-  sectionCategories.appendChild(defaultCategory);
+  filtersCategories.appendChild(defaultCategory);
+
+  // Modal section
+  const modalCategories = document.getElementById("photo-category");
 
   for (let i = 0; i < categories.length; i++) {
-    // Récupération de chaque item du tableau categories
+    // Filters section
     const category = categories[i];
-    // Création d'une balise dédiée à une catégorie
     const titleCategory = document.createElement("button");
-    // Assignation d'une class "filter"
     titleCategory.classList.add("cta", "filters__cta");
     titleCategory.innerText = category.name;
     titleCategory.id = category.name;
-    // Association de la balise button à la liste des catégories
-    sectionCategories.appendChild(titleCategory);
+    filtersCategories.appendChild(titleCategory);
+
+    // Modal section
+    const modalCategory = document.createElement("option");
+    modalCategory.classList.add("category__item");
+    modalCategory.value = category.id;
+    modalCategory.innerText = category.name;
+    modalCategory.id = category.id;
+    modalCategories.appendChild(modalCategory);
   }
 }
+
+

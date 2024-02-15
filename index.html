@@ -7,7 +7,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
-	<meta name="description" content="">
+	<meta name="description" content="Site de Sophie Bluel - Architecte d'intérieur">
 	<link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -82,66 +82,6 @@
 					<section class="modal-delete modal__page--1">
 
 						<div class="modal-delete__gallery">
-							<figure>
-								<img src="assets/images/abajour-tahina.webp" class="modal-delete__image" alt="Abajour Tahina">
-								<span class="modal-delete__icon">
-									<img src="assets/icons/trash.svg" class="modal-delete__trash" alt="Icône pour supprimer un projet">	
-								</span>
-								</figure>
-							<figure>
-								<img src="assets/images/appartement-paris-v.webp" class="modal-delete__image" alt="Appartement Paris V">
-								<span class="modal-delete__icon">
-									<img src="assets/icons/trash.svg" class="modal-delete__trash" alt="Icône pour supprimer un projet">	
-								</span>
-							</figure>
-							<figure>
-								<img src="assets/images/restaurant-sushisen-londres.webp" class="modal-delete__image" alt="Restaurant Sushisen - Londres">
-								<span class="modal-delete__icon">
-									<img src="assets/icons/trash.svg" class="modal-delete__trash" alt="Icône pour supprimer un projet">	
-								</span>
-							</figure>
-							<figure>
-								<img src="assets/images/la-balisiere.webp" class="modal-delete__image" alt="Villa La Balisiere - Port Louis">
-								<span class="modal-delete__icon">
-									<img src="assets/icons/trash.svg" class="modal-delete__trash" alt="Icône pour supprimer un projet">	
-								</span>
-							</figure>
-							<figure>
-								<img src="assets/images/structures-thermopolis.webp" class="modal-delete__image" alt="Structures Thermopolis">
-								<span class="modal-delete__icon">
-									<img src="assets/icons/trash.svg" class="modal-delete__trash" alt="Icône pour supprimer un projet">	
-								</span>
-							</figure>
-							<figure>
-								<img src="assets/images/appartement-paris-x.webp" class="modal-delete__image" alt="Appartement Paris X">
-								<span class="modal-delete__icon">
-									<img src="assets/icons/trash.svg" class="modal-delete__trash" alt="Icône pour supprimer un projet">	
-								</span>
-							</figure>
-							<figure>
-								<img src="assets/images/la-balisiere.webp" class="modal-delete__image" alt="Villa La Balisiere - Port Louis">
-								<span class="modal-delete__icon">
-									<img src="assets/icons/trash.svg" class="modal-delete__trash" alt="Icône pour supprimer un projet">	
-								</span>
-							</figure>
-							<figure>
-								<img src="assets/images/structures-thermopolis.webp" class="modal-delete__image" alt="Structures Thermopolis">
-								<span class="modal-delete__icon">
-									<img src="assets/icons/trash.svg" class="modal-delete__trash" alt="Icône pour supprimer un projet">	
-								</span>
-							</figure>
-							<figure>
-								<img src="assets/images/appartement-paris-x.webp" class="modal-delete__image" alt="Appartement Paris X">
-								<span class="modal-delete__icon">
-									<img src="assets/icons/trash.svg" class="modal-delete__trash" alt="Icône pour supprimer un projet">	
-								</span>
-							</figure>
-							<figure>
-								<img src="assets/images/appartement-paris-x.webp" class="modal-delete__image" alt="Appartement Paris X">
-								<span class="modal-delete__icon">
-									<img src="assets/icons/trash.svg" class="modal-delete__trash" alt="Icône pour supprimer un projet">	
-								</span>
-							</figure>
 						</div>
 
 						<div class="modal-delete__nav">
@@ -160,7 +100,7 @@
 								<img 
 									src="assets/icons/upload-photo.svg" 
 									class="photo-upload__image" 
-									alt="Icône représentant une image-type">
+									height="61">
 								<label 
 									for="photo-file" 
 									class="photo-upload__label">
@@ -175,21 +115,19 @@
 								<p>jpg, png : 4mo max</p>
 							</div>
 
-
 							<label for="photo-title" class="photo-title__label">Titre</label>
 							<input type="text" name="photo-title" id="photo-title">
 
 							<label for="photo-category" class="photo-category__label">Catégorie</label>
 							<select name="categories" id="photo-category">
-								<option value=""></option>
-								<option value="objets">Objets</option>
-								<option value="appartements">Appartements</option>
-								<option value="bar-et-restaurant">Bar & Restaurant</option>
+								<option id="default-category" selected="true" disabled="disabled">Sélectionner une catégorie</option>
 							</select>
 
 							<div class="modal-add__border">
-								<input type="submit" value="Valider" id="save-project" class="cta modal__cta" disabled>
+								<input type="button" value="Valider" id="save-project" class="cta modal__cta" disabled>
 							</div>
+
+							<p class="modal-add__message modal-add__message--error">Votre photo a bien été ajoutée à la liste des projets.</p>
 
 						</form>
 			
