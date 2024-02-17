@@ -34,7 +34,7 @@ async function logIn() {
       })
       loginForm.reset(); // Les champs sont vidés au submit
   })
-};
+}
 
 logIn();
 
@@ -50,8 +50,8 @@ function checkEmail(balise) {
   } else {
       balise.classList.add("error");
   }
-};
+}
 
 loginEmail.addEventListener("change", () => {
   checkEmail(loginEmail);
-});
+})

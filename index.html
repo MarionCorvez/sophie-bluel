@@ -35,7 +35,7 @@
 				<li>
 					<a href="#portfolio">projets</a></li>
 				<li>
-					<a href="#contact">contact</a></li>
+					<a href="#contact-form">contact</a></li>
 				<li>
 					<a href="./pages/login.html" id="login__label">login</a></li>
 				<li>
@@ -99,26 +99,26 @@
 							<div class="photo-upload">
 								<img 
 									src="assets/icons/upload-photo.svg" 
-									class="photo-upload__image" 
+									class="photo-upload__placeholder" 
 									height="61">
 								<label 
 									for="photo-file" 
-									class="photo-upload__label">
-									<strong>+ Ajouter photo</strong>
+									class="photo-label">
+									<p class="photo-label__button"><strong>+ Ajouter photo</strong></p>
 								</label>
 								<input 
 									type="file" 
 									id="photo-file"
 									name="photo-file" 
+									value="+ Ajouter photo" 
 									class="photo-upload__input" 
 									accept="image/jpg, image/png" />
-								<p>jpg, png : 4mo max</p>
+								<p class="photo-upload__details">jpg, png : 4mo max</p>
 							</div>
-
-							<label for="photo-title" class="photo-title__label">Titre</label>
+							<label for="photo-title" class="photo__title">Titre</label>
 							<input type="text" name="photo-title" id="photo-title">
 
-							<label for="photo-category" class="photo-category__label">Catégorie</label>
+							<label for="photo-category" class="photo__category">Catégorie</label>
 							<select name="categories" id="photo-category">
 								<option id="default-category" selected="true" disabled="disabled">Sélectionner une catégorie</option>
 							</select>

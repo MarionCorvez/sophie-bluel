@@ -4,11 +4,14 @@
 
 export function createWorksWrapper(works) {
 
-  // nouvelle syntaxe
+  const portfolioSection = document.querySelector(".gallery");
+  portfolioSection.innerHTML = ""; // La galerie est vidée avant sa construction
+  const modalSection = document.querySelector(".modal-delete__gallery");
+  modalSection.innerHTML = ""; // La modale est vidée avant sa construction
+
   works.map((work) => {
 
     // Portfolio section
-    const portfolioSection = document.querySelector(".gallery");
     const portfolioFigure = document.createElement("figure");
     portfolioFigure.id = work.categoryId;
     const portfolioImage = document.createElement("img");
@@ -21,7 +24,6 @@ export function createWorksWrapper(works) {
     portfolioFigure.appendChild(portfolioFigcaption);
 
     // Modal section
-    const modalSection = document.querySelector(".modal-delete__gallery");
     const modalFigure = document.createElement("figure");
     const modalImage = document.createElement("img");
     modalImage.src = work.imageUrl;
@@ -76,5 +78,3 @@ export function createCategoriesWrapper(categories) {
     modalCategories.appendChild(modalCategory);
   }
 }
-
-

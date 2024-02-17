@@ -2,8 +2,9 @@
  * @summary Import des fonctions depuis les autres fichiers
  */
 
-import { isLoggedIn, logOut } from './usermode.js';
-import { createWorksWrapper, createCategoriesWrapper } from './templates.js';
+import { isLoggedIn, logOut } from './components/usermode.js';
+import { createWorksWrapper, createCategoriesWrapper } from './components/templates.js';
+import { manageModal, navigateModal, modalForm, fileInput, fileTitle, fileCategory, validateButton, errorMessage } from './components/modal.js';
 
 
 /**
@@ -14,10 +15,6 @@ const api = "http://localhost:5678/api/"; // URL de l'API
 let works = []; // Création d'un tableau vide pour accueillir les données
 let categories = [];
 
-
-/**
- * @summary Gestion de la connexion au site et de l'affichage en fonction
- */
 
 isLoggedIn(); // Modification de l'interface en fonction de l'état de connexion
 logOut(); // Suppression du token au clic sur le lien "login / logout"
@@ -39,9 +36,9 @@ fetchWorks(); // Appel de la fonction fetchWorks
  */
 
 async function fetchCategories() {
-    categories = await fetch(api + "categories").then(categories => categories.json());
-    createCategoriesWrapper(categories);
-    filterCategories(); // Appel de la fonction qui filtre les projets
+  categories = await fetch(api + "categories").then(categories => categories.json());
+  createCategoriesWrapper(categories); // Création des catégories
+  filterCategories(); // Appel de la fonction qui filtre les projets par catégorie
 }
 fetchCategories(); // Appel de la fonction fetchCategories
 
@@ -77,167 +74,131 @@ function filterCategories() {
 }
 
 
-/**
- * @summary Ouverture et fermeture de la modale
- */
-
-const modal = document.querySelector(".modal");
-const openModal = document.querySelector(".modal--open");
-const closeModal = document.querySelector(".modal__nav--close");
-
-openModal.addEventListener("click", () => {
-  modal.showModal();
-});
-
-closeModal.addEventListener("click", () => {
-  modal.close();
-});
-
-// @https://blog.webdevsimplified.com/
-modal.addEventListener("click", (e) => {
-  const modalDimensions = modal.getBoundingClientRect();
-  if ( // Détection du clic en dehors de la modale
-    e.clientX < modalDimensions.left ||
-    e.clientX > modalDimensions.right ||
-    e.clientY < modalDimensions.top ||
-    e.clientY > modalDimensions.bottom
-  ) {
-    modal.close();
-  }
-});
-
-
-/**
- * @summary Gestion du passage d'une page de la modale à l'autre
- */
-
-let page1Items = document.querySelectorAll(".modal__page--1"); 
-let page2Items = document.querySelectorAll(".modal__page--2");
-let modalHeading = document.querySelector(".modal__heading");
-const buttonBack = document.querySelector(".modal__nav--back");
-const buttonAddProject = document.getElementById("add-project");
-
-buttonAddProject.addEventListener("click", () => {
-  buttonBack.style.display = "block";
-  modalHeading.textContent = "Ajout photo"; // Le titre est modifié
-  page2Items.forEach(page2Item => { // Le contenu de la page 2 est affiché
-    page2Item.style.display = "block";
-  });
-  page1Items.forEach(page1Item => { // Le contenu de la page 1 est masqué
-    page1Item.style.display = "none";
-  });  
-});
-
-buttonBack.addEventListener("click", () => {
-  modalHeading.textContent = "Galerie photo"; // Le titre est modifié
-  buttonBack.style.display = "none";
-  page1Items.forEach(page1Item => { // Le contenu de la page 1 est affiché
-    page1Item.style.display = "block";
-  });
-  page2Items.forEach(page2Item => { // Le contenu de la page 2 est masqué
-    page2Item.style.display = "none";
-  });
-});
-
-
-/**
- * @summary Gestion de l'upload d'une photo
- */
-
-// Variables
-const modalForm = document.querySelector(".modal-add__form");
-const fileUploaded = document.querySelector(".photo-upload__image");
-fileUploaded.value = "default";
-const fileInput = document.getElementById("photo-file");
-const fileTitle = document.getElementById("photo-title");
-const fileCategory = document.querySelector("#photo-category");
-const validateButton = document.getElementById("save-project");
-const errorMessage = document.querySelector(".modal-add__message");
-
-
-// Possible de factoriser les 3 EventListeners ?
-// Event listeners
-fileInput.addEventListener("change", function () {
-  fileUploaded.src = window.URL.createObjectURL(this.files[0]); // URL du fichier ajouté
-  fileUploaded.value = "Nouvelle photo ajoutée";
-  validateProject();
-});
-
-fileTitle.addEventListener("change", function () {
-  validateProject();
-});
-
-let fileCategoryValue = "Sélectionner une catégorie";
-fileCategory.addEventListener("change", (event) => {
-  fileCategoryValue = event.target.value;
-  validateProject();
-});
-
-
-/**
- * @summary Vérification des champs avant l'ajout d'un projet
- */
-
-function validateProject() {
-  if (fileUploaded.value == "default" || fileTitle.value == "" || fileCategoryValue == "Sélectionner une catégorie") {
-    errorMessage.style.display = "block";
-    errorMessage.innerText = "Merci de remplir tous les champs.";
-    errorMessage.classList.add("modal-add__message--error");
-    validateButton.disabled = true;
-  } else {
-    errorMessage.innerText = "";
-    validateButton.removeAttribute("disabled");
-    errorMessage.classList.remove("modal-add__message--error");
-    errorMessage.classList.add("modal-add__message--ok");
-    errorMessage.innerText = "Tous les champs ont bien été remplis.";
-  }
-}
-
-
-/**
- * @summary Construction d'un objet FormData [MDN]
- */
-
-const formData = new FormData(); // Création d'une instance
-formData.append("image", fileInput.files[0]); // Ajout des champs
-formData.append("title", fileTitle.value);
-formData.append("category", fileCategory.value);
+manageModal(); // Gestion de l'ouverture et de la fermeture de la modale
+navigateModal(); // Gestion de la navigation dans la modale
 
 
 /**
  * @summary Validation du formulaire d'envoi de projet
  */
 
-validateButton.addEventListener("click", (event) => {
+function sendNewProject() {
 
-  // Insérer ici la fonction d'envoi du projet à l'API
-  console.log("add"); // Vérification à supprimer en production
-  console.log(fileInput.files[0]);
-  console.log(fileTitle.value);
-  console.log(fileCategory.value); // Vérification des champs à envoyer à l'API
+  validateButton.addEventListener("click", (event) => {
 
- fetch(api + "works", {
-    method: "POST",
+    const formData = new FormData(); // Construction d'un objet FormData [MDN]
+    formData.append("image", fileInput.files[0]);
+    formData.append("title", fileTitle.value);
+    formData.append("category", fileCategory.value);
+
+    fetch(api + "works", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + sessionStorage.getItem("token"),      
+      },
+      body: formData
+    })
+    .then(response => {
+      if (response.ok) {
+        errorMessage.classList.remove("modal-add__message--error");
+        errorMessage.classList.add("modal-add__message--ok");
+        errorMessage.innerText = "Le nouveau projet a bien été ajouté.";
+        fetchWorks();
+      } else {
+        errorMessage.classList.remove("modal-add__message--ok");
+        errorMessage.classList.add("modal-add__message--error");
+        errorMessage.innerText = "Une erreur s'est produite. Merci d'essayer à nouveau ou de contacter l'administration du site.";
+      }
+    })
+    modalForm.reset();
+  })
+}
+
+sendNewProject();
+
+
+/**
+ * @summary Suppression des données affichées
+ */
+
+// Fonction à tester seule
+// Puis avec le fetch, puis createWrapper
+/* function emptyDatas() {
+  const portfolioSection = document.querySelector(".gallery");
+  const modalSection = document.querySelector(".modal-delete__gallery");
+  portfolioSection.innerHTML = "";
+  modalSection.innerHTML = "";
+}
+
+function deleteWork() {
+  const trashIcons = document.querySelectorAll("modal-delete__trash");
+  trashIcons.forEach(trashIcon =>  {
+    trashIcon.addEventListener("click", () => { */
+
+      
+      // Code à tester
+      //id = id du projet
+/*       const id = trash.id;
+      const init = {
+        methode = DELETE
+        headers = content-type : "application/json",
+      }
+      fetch("api + projects + id.init")
+      .then (response) => {
+        if (!response.ok) {
+        console.log("erreur lors du delete");
+        }
+        return response.json();
+      })
+      .then(data) = {
+        console.log(delete réussi, data);
+        displayModal();
+        displayProjects();
+      }
+    })
+  })
+} */
+
+  // Identifier élément à supprimer : boucle ou élément avec ID
+  // Création d'une donnée à Delete
+  // innerHTML
+  // fetchWorks
+  // createWrapper
+
+
+/* tester la réception des données fetch sans le post
+deleteWork(); ou addWork();
+emptyDatas();
+fetchWorks();
+fetchCategories();
+createWorksWrapper();
+createCategoriesWrapper(); */
+
+
+/*
+/**
+ * Delete works from the API
+ */
+/* function deleteWorksData(id) {
+  fetch(`http://localhost:5678/api/works/${id}`, {
+    method: "DELETE",
     headers: {
-      "Authorization": "Bearer " + sessionStorage.getItem("token"),      
+      "content-type": "application/Json",
+      authorization: "Bearer " + sessionStorage.getItem("token"),
     },
-    body: formData
-  })
-  .then(response => {
-    if (response.ok) {
-      console.log("Travail envoyé avec succès :");
-      resetForm();
+  }).then((response) => {
+    if (response.status === 200) {
+      // To delete the element from the dom
+      const deletedElement = document.getElementById(id);
+      if (deletedElement) {
+        deletedElement.parentNode.removeChild(deletedElement);
+      }
+
+      // Updating the modal
+      displayModalDeleteWorks();
+      displayWorksModal();
+      // Update the main gallery
+      displayWorks();
     }
-  })
-
-  // Insérer ici les messages en fonction du type de réponse
-  errorMessage.classList.remove("modal-add__message--error");
-  errorMessage.classList.add("modal-add__message--ok");
-  errorMessage.innerText = "Le nouveau projet a bien été ajouté.";
-
-  // Si l'envoi s'est bien déroulé, on vide le formulaire
-  modalForm.reset();
-  fileUploaded.src = "/assets/icons/upload-photo.svg";
-});
-
-
+  });
+} */

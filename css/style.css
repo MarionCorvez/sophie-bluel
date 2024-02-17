@@ -393,10 +393,13 @@ select {
   display: none;
 }
 
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
 .modal {
   width: 647px;
   height: 685px;
-  overflow: hidden;
   border-radius: 10px;
   border: 0;
   box-shadow: 0 0 1em rgba(0, 0, 0, 0.3);
@@ -492,18 +495,11 @@ select {
 
 .photo-upload {
   flex-direction: column;
-  gap: 7px;
+  position: relative;
   background-color: #E8F1F6;
-  padding: 22px 0 19px 0;
 }
-.photo-upload__label {
-  display: inline-block;
-  background-color: #CBD6DC;
-  color: #306685;
-  margin-top: 6px;
-  padding: 10px 33px;
-  border-radius: 50px;
-  cursor: pointer;
+.photo-upload__placeholder {
+  padding: 22px 0 13px;
 }
 .photo-upload__input {
   position: absolute;
@@ -515,17 +511,38 @@ select {
   overflow: hidden;
   clip-path: circle(0);
 }
-.photo-upload p {
+.photo-upload__details {
   font-size: 10px;
   color: #444444;
+  padding: 7px 0 19px;
 }
 
-.photo-title__label {
+.photo__title {
   padding: 30px 0 10px;
 }
 
-.photo-category__label {
+.photo__category {
   padding: 21px 0 10px;
+}
+
+.photo-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.photo-label__button {
+  display: inline-block;
+  background-color: #CBD6DC;
+  color: #306685;
+  padding: 10px 33px;
+  border-radius: 50px;
+  border: none;
+}
+.photo-label--uploaded {
+  max-height: 166px;
+  object-fit: contain;
 }
 
 /*# sourceMappingURL=style.css.map */
