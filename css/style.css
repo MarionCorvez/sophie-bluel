@@ -462,7 +462,7 @@ html:has(dialog[open]) {
 }
 .modal-delete__nav {
   align-items: center;
-  margin-top: 67px;
+  margin-top: 47px;
   padding-top: 38px;
   border-top: 2px solid #b3b3b3;
 }
@@ -533,7 +533,6 @@ html:has(dialog[open]) {
   cursor: pointer;
 }
 .photo-label__button {
-  display: inline-block;
   background-color: #CBD6DC;
   color: #306685;
   padding: 10px 33px;

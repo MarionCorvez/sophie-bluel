@@ -104,7 +104,7 @@ html:has(dialog[open]) {
   &__nav {
     @extend %flex--center;
     align-items: center;
-    margin-top: 67px;
+    margin-top: 47px;
     padding-top: 38px;
     border-top: 2px solid #b3b3b3;
   }
@@ -191,7 +191,6 @@ html:has(dialog[open]) {
   cursor: pointer;
 
   &__button {
-    display: inline-block;
     background-color: #CBD6DC;
     color: #306685;
     padding: 10px 33px;

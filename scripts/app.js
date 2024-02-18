@@ -4,7 +4,10 @@
 
 import { isLoggedIn, logOut } from './components/usermode.js';
 import { createWorksWrapper, createCategoriesWrapper } from './components/templates.js';
-import { manageModal, navigateModal, modalForm, fileInput, fileTitle, fileCategory, validateButton, errorMessage } from './components/modal.js';
+import { 
+  manageModal, navigateModal, modalForm, fileInput, fileTitle, 
+  fileCategory, validateButton, errorMessage, resetPhoto } 
+  from './components/modal.js';
 
 
 /**
@@ -79,10 +82,10 @@ navigateModal(); // Gestion de la navigation dans la modale
 
 
 /**
- * @summary Validation du formulaire d'envoi de projet
+ * @summary Envoi d'un nouveau projet
  */
 
-function sendNewProject() {
+function sendNewWork() {
 
   validateButton.addEventListener("click", (event) => {
 
@@ -110,72 +113,63 @@ function sendNewProject() {
         errorMessage.innerText = "Une erreur s'est produite. Merci d'essayer à nouveau ou de contacter l'administration du site.";
       }
     })
-    modalForm.reset();
+    resetPhoto(); // Le placeholder d'upload est réaffiché
+    modalForm.reset(); // Le formulaire est vidé
   })
 }
 
-sendNewProject();
+sendNewWork();
+
 
 
 /**
- * @summary Suppression des données affichées
+ * @summary Suppression d'un projet de la galerie
  */
 
-// Fonction à tester seule
-// Puis avec le fetch, puis createWrapper
-/* function emptyDatas() {
-  const portfolioSection = document.querySelector(".gallery");
-  const modalSection = document.querySelector(".modal-delete__gallery");
-  portfolioSection.innerHTML = "";
-  modalSection.innerHTML = "";
-}
+/* const trashIcons = document.querySelectorAll("modal-delete__trash");
+trashIcons.forEach(trashIcon =>  {
+  trashIcon.addEventListener("click", () => {
+    const id = trashIcon.id;
+    console.log(trashIcon.id);
+    deleteWork();
+  })
+})
 
 function deleteWork() {
-  const trashIcons = document.querySelectorAll("modal-delete__trash");
-  trashIcons.forEach(trashIcon =>  {
-    trashIcon.addEventListener("click", () => { */
-
-      
-      // Code à tester
-      //id = id du projet
-/*       const id = trash.id;
-      const init = {
-        methode = DELETE
-        headers = content-type : "application/json",
-      }
-      fetch("api + projects + id.init")
-      .then (response) => {
-        if (!response.ok) {
-        console.log("erreur lors du delete");
-        }
-        return response.json();
-      })
-      .then(data) = {
-        console.log(delete réussi, data);
-        displayModal();
-        displayProjects();
-      }
-    })
+  
+  fetch(api + `works/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Authorization": "Bearer " + sessionStorage.getItem("token"),
+    }
   })
-} */
+  .then(response => {
+    if (response.ok) {
+      console.log("ok");
+      const deletedFigure = document.querySelector(('[data-id="id"]'));
+      console.log(deletedFigure);
+      const deletedItem = document.getElementById(id);
+      if (deletedItem) {
+        deletedItem.parentNode.removeChild(deletedItem); // Suppression de l'élément parent "figure"
+      }
+      errorMessage.style.display = "block";
+      errorMessage.classList.add("modal-add__message--ok");
+      errorMessage.innerText = "Le projet a bien été supprimé.";
+      fetchWorks();
+    } else {
+    console.log("nok");
+      errorMessage.classList.remove("modal-add__message--ok");
+      errorMessage.classList.add("modal-add__message--error");
+      errorMessage.innerText = "Une erreur s'est produite. Merci d'essayer à nouveau ou de contacter l'administration du site.";
+    }
+  })
+}
 
-  // Identifier élément à supprimer : boucle ou élément avec ID
-  // Création d'une donnée à Delete
-  // innerHTML
-  // fetchWorks
-  // createWrapper
+deleteWork(); */
 
 
-/* tester la réception des données fetch sans le post
-deleteWork(); ou addWork();
-emptyDatas();
-fetchWorks();
-fetchCategories();
-createWorksWrapper();
-createCategoriesWrapper(); */
 
 
-/*
 /**
  * Delete works from the API
  */

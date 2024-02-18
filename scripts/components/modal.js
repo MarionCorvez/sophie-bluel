@@ -58,7 +58,6 @@ export function navigateModal() {
       page2Item.style.display = "none";
     })
   })
-
 }
 
 
@@ -74,22 +73,28 @@ export const fileTitle = document.getElementById("photo-title");
 export const fileCategory = document.querySelector("#photo-category");
 export const validateButton = document.getElementById("save-project");
 export const errorMessage = document.querySelector(".modal-add__message");
+const filePlaceholder = document.querySelector(".photo-upload__placeholder");
+const fileButton = document.querySelector(".photo-label__button");
+const fileDetails = document.querySelector(".photo-upload__details");
 
 // Event listeners
 fileInput.addEventListener("change", function () {
   const fileUploaded = document.createElement("img");
   fileUploaded.classList.add("photo-label--uploaded");
   labelWrapper.appendChild(fileUploaded);
+  const fileDisplayed = document.querySelector(".photo-label--uploaded");
   // Comment limiter l'affichage et la création d'URL à un seul fichier ?
   fileUploaded.src = window.URL.createObjectURL(this.files[0]); // URL du fichier ajouté
-  const filePlaceholder = document.querySelector(".photo-upload__placeholder");
-  const fileButton = document.querySelector(".photo-label__button");
-  const fileDetails = document.querySelector(".photo-upload__details");
   filePlaceholder.style.display = "none";
   fileButton.style.display = "none";
   fileDetails.style.display = "none";
   validateProject();
 })
+
+
+/* fileInput.addEventListener("change", (event) => {
+  fileDisplayed.style.display = "none";
+}); */
 
 fileTitle.addEventListener("change", function () {
   validateProject();
@@ -119,4 +124,17 @@ export function validateProject() {
     errorMessage.classList.add("modal-add__message--ok");
     errorMessage.innerText = "Tous les champs ont bien été remplis.";
   }
+}
+
+
+/**
+ * @summary Réinitialisation du champ d'upload de fichier
+ */
+
+export function resetPhoto() {
+  const fileDisplayed = document.querySelector(".photo-label--uploaded");
+  fileDisplayed.style.display = "none";
+  filePlaceholder.style.display = "block";
+  fileButton.style.display = "block";
+  fileDetails.style.display = "block";
 }
