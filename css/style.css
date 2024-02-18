@@ -42,6 +42,7 @@ body {
 img {
   vertical-align: middle;
   max-width: 100%;
+  object-fit: cover;
 }
 
 ol, ul {
@@ -134,24 +135,41 @@ h2 {
 
 header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   padding: 50px 40px;
+}
+@media screen and (width >= 768px) {
+  header {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
 nav ul {
   list-style-type: none;
 }
 nav li {
-  padding-left: 44px;
   font-size: 1.2em;
+  padding-right: 22px;
+}
+@media screen and (width >= 768px) {
+  nav li {
+    padding-left: 44px;
+  }
 }
 nav li a:hover {
   color: #B1663C;
 }
 
 #introduction {
+  flex-direction: column;
   gap: 72px;
   padding-bottom: 90px;
+}
+@media screen and (width >= 768px) {
+  #introduction {
+    flex-direction: row;
+  }
 }
 #introduction figure {
   flex: 1;
@@ -162,6 +180,12 @@ nav li a:hover {
 }
 #introduction article {
   flex: 1;
+  padding: 0 20px;
+}
+@media screen and (width >= 768px) {
+  #introduction article {
+    padding: 0;
+  }
 }
 #introduction h2 {
   margin-bottom: 1em;
@@ -221,10 +245,20 @@ footer nav ul {
 
 .gallery {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-column-gap: 20px;
   grid-row-gap: 20px;
   padding-top: 41px;
+}
+@media screen and (width >= 768px) {
+  .gallery {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media screen and (width > 1024px) {
+  .gallery {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 .gallery img {
   width: 100%;
@@ -235,6 +269,7 @@ footer nav ul {
 
 .filters {
   align-items: center;
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 10px;
 }
@@ -272,20 +307,37 @@ select {
   text-align: center;
 }
 .section-form h2 {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+}
+@media screen and (width >= 768px) {
+  .section-form h2 {
+    margin-bottom: 20px;
+  }
 }
 .section-form form {
   text-align: left;
-  margin-top: 30px;
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
+  padding: 0 20px;
+}
+@media screen and (width >= 768px) {
+  .section-form form {
+    padding: 0;
+    margin-top: 30px;
+  }
 }
 .section-form label {
-  margin: 2em 0 1em 0;
+  margin: 2em 0 1em;
 }
 
 .section-form--contact {
-  padding: 57px 0 45px 0;
+  padding: 40px 20px;
+}
+@media screen and (width >= 768px) {
+  .section-form--contact {
+    padding: 57px 0 45px;
+  }
 }
 
 .cta {
@@ -348,7 +400,12 @@ select {
 /* Login */
 .section-form--login {
   flex-direction: column;
-  padding: 150px 0px 355px 0px;
+  padding: 50px 0;
+}
+@media screen and (width >= 768px) {
+  .section-form--login {
+    padding: 150px 0;
+  }
 }
 .section-form--login a {
   text-decoration: underline;
@@ -428,14 +485,24 @@ html:has(dialog[open]) {
   text-align: center;
 }
 .modal__wrapper {
-  padding: 40px 105px;
+  padding: 20px 50px;
+}
+@media screen and (width >= 768px) {
+  .modal__wrapper {
+    padding: 40px 105px;
+  }
 }
 
 .modal-delete__gallery {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: 1fr 1fr;
   grid-column-gap: 9px;
   grid-row-gap: 28px;
+}
+@media screen and (width >= 768px) {
+  .modal-delete__gallery {
+    grid-template-columns: repeat(5, 1fr);
+  }
 }
 .modal-delete figure {
   position: relative;
@@ -474,7 +541,11 @@ html:has(dialog[open]) {
   text-align: left;
   display: flex;
   flex-direction: column;
-  width: 420px;
+}
+@media screen and (width >= 768px) {
+  .modal-add__form {
+    width: 420px;
+  }
 }
 .modal-add__border {
   align-items: center;

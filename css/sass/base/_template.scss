@@ -24,13 +24,36 @@
 	margin: 50px auto;
 }
 
+// $Breakpoints
+
+@mixin bp($point) {
+  @if $point == large {
+    @media screen and (width > 1024px) { @content; }
+  }
+  @else if $point == medium {
+    @media screen and (width >= 768px) { @content; }
+  }
+  @else if $point == small/medium {
+    @media screen and (768px <= width <= 1024px) { @content; }
+  }    
+}
+
+// @include a.bp(medium) {}
+// @include a.bp(small/medium) {}
+// @include a.bp(large) {}
+
 
 // Header
 
 header {
 	display: flex;
-	justify-content: space-between;
+	flex-direction: column;
 	padding: 50px 40px;
+	@include bp(medium) {
+		flex-direction: row;
+		justify-content: space-between;
+
+	}
 }
 
 
@@ -43,8 +66,12 @@ nav {
 	}
 
 	& li {
-		padding-left: 44px;
 		font-size: 1.2em;
+		padding-right: 22px;
+		@include bp(medium) {
+			padding-left: 44px;
+		}
+
 		& a:hover {
 			color: #B1663C;
 		}
@@ -56,18 +83,26 @@ nav {
 
 #introduction {
 	@extend %flex-a--center;
+	flex-direction: column;
 	gap: 72px;
 	padding-bottom: 90px;
+	@include bp(medium) {
+		flex-direction: row;
+	}
 
 	& figure {
-		flex: 1
+		flex: 1;
 	}
 	& img {
 		display: block;
 		margin: auto;
 	}
 	& article {
-		flex: 1
+		flex: 1;
+		padding: 0 20px;
+		@include bp(medium) {
+			padding: 0;
+		}
 	}
 	& h2 {
 		margin-bottom: 1em;

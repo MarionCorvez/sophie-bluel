@@ -40,10 +40,16 @@
 
 .gallery {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: 1fr;
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
 	padding-top: 41px;
+	@include b.bp(medium) {
+		grid-template-columns: 1fr 1fr;
+	}
+	@include b.bp(large) {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
 
 	& img {
 		width: 100%;
@@ -60,6 +66,7 @@
 .filters {
 	@extend %flex--center;
 	align-items: center;
+	flex-wrap: wrap;
 	gap: 10px;
 	margin-bottom: 10px;
 }

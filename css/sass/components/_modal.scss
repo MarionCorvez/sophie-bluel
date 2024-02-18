@@ -59,7 +59,10 @@ html:has(dialog[open]) {
   }
 
   &__wrapper {
-    padding: 40px 105px;
+    padding: 20px 50px;
+    @include b.bp(medium) {
+      padding: 40px 105px;
+    }
   }
 }
 
@@ -68,9 +71,12 @@ html:has(dialog[open]) {
 
   &__gallery {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: 1fr 1fr;
     grid-column-gap: 9px;
     grid-row-gap: 28px;
+    @include b.bp(medium) {
+      grid-template-columns: repeat(5, 1fr);
+    }
   }
 
   & figure {
@@ -122,7 +128,9 @@ html:has(dialog[open]) {
     text-align: left;
 		display: flex;
 		flex-direction: column;
-    width: 420px;
+    @include b.bp(medium) {
+      width: 420px;
+    }
   }
   
   &__border {

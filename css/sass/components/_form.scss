@@ -39,25 +39,36 @@ select {
 	}
 
 	& h2 {
-		margin-bottom: 20px;
+		margin-bottom: 10px;
+		@include b.bp(medium) {
+			margin-bottom: 20px;
+		}
 	}
 
 	& form {
 		text-align: left;
-		margin-top: 30px;
+		margin-top: 10px;
 		display: flex;
 		flex-direction: column;
+		padding: 0 20px;
+		@include b.bp(medium) {
+			padding: 0;
+			margin-top: 30px;
+		}
 	}
 
 	& label {
-		margin: 2em 0 1em 0;
+		margin: 2em 0 1em;
 	}
 }
 
 
 // Contact
 .section-form--contact {
-	padding: 57px 0 45px 0;
+	padding: 40px 20px;
+	@include b.bp(medium) {
+		padding: 57px 0 45px;
+	}
 }
 
 
@@ -130,7 +141,10 @@ select {
 .section-form--login {
 	@extend %flex--center;
 	flex-direction: column;
-	padding: 150px 0px 355px 0px;
+	padding: 50px 0;
+	@include b.bp(medium) {
+		padding: 150px 0;
+	}
 
 	& a {
 		text-decoration: underline;

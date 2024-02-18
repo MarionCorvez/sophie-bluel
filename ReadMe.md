@@ -12,7 +12,7 @@
 - Étape 2.1 : Intégration du design de la page de formulaire
 - Étape 2.2 : Authentification de l'utilisateur
 
-3. [ ] Étape 3 : Ajoutez la modale
+3. [X] Étape 3 : Ajoutez la modale
 - Étape 3.1 : Ajout de la fenêtre modale
 - Étape 3.2 : Suppression de travaux existants
 - Étape 3.3 : Envoi d'un nouveau projet au back-end via le formulaire de la modale
