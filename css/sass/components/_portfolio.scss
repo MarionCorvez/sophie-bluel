@@ -6,9 +6,6 @@
 
 @use '../base' as b;
 
-// @extend %flex--center;
-// @extend %flex-a--center;
-
 
 // Heading
 
@@ -41,8 +38,7 @@
 .gallery {
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-column-gap: 20px;
-	grid-row-gap: 20px;
+	grid-gap: 20px;
 	padding-top: 41px;
 	@include b.bp(medium) {
 		grid-template-columns: 1fr 1fr;

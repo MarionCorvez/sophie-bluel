@@ -29,7 +29,6 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
   display: block;
@@ -208,16 +207,10 @@ footer nav ul {
   justify-content: flex-end;
   margin: 2em;
 }
-
-.footer-login {
+footer-login {
   margin-top: 300px;
 }
 
-/*
-  ========================================
-  $Icons
-  ========================================
-*/
 /*
   ========================================
   $Portfolio
@@ -246,8 +239,7 @@ footer nav ul {
 .gallery {
   display: grid;
   grid-template-columns: 1fr;
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
+  grid-gap: 20px;
   padding-top: 41px;
 }
 @media screen and (width >= 768px) {
@@ -345,7 +337,7 @@ select {
   font-size: 14px;
   font-weight: 700;
   text-align: center;
-  margin: 2em auto;
+  margin: 2rem auto 1rem;
   padding: 9px 15px;
   border-radius: 60px;
   border: none;
@@ -397,25 +389,24 @@ select {
   cursor: default;
 }
 
-/* Login */
 .section-form--login {
   flex-direction: column;
   padding: 50px 0;
 }
 @media screen and (width >= 768px) {
   .section-form--login {
-    padding: 150px 0;
+    padding: 75px 0;
   }
 }
 .section-form--login a {
   text-decoration: underline;
+  padding-top: 15px;
 }
 
 #login-form__wrapper .error {
   border: 2px solid #B1663C;
 }
 
-/* Banner editor mode */
 .banner-editor-mode {
   align-items: center;
   background-color: #000;
@@ -427,13 +418,22 @@ select {
   padding-left: 10px;
 }
 
-/* Default is-logged-out */
 .visitor-mode {
   display: block;
 }
 
 .editor-mode {
   display: none;
+}
+
+.message--ok {
+  padding-top: 21px;
+  color: #1D6154;
+}
+
+.message--error {
+  padding-top: 21px;
+  color: #B1663C;
 }
 
 /*
@@ -495,11 +495,16 @@ html:has(dialog[open]) {
 
 .modal-delete__gallery {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 9px;
   grid-row-gap: 28px;
 }
 @media screen and (width >= 768px) {
+  .modal-delete__gallery {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media screen and (width > 1024px) {
   .modal-delete__gallery {
     grid-template-columns: repeat(5, 1fr);
   }
@@ -553,16 +558,6 @@ html:has(dialog[open]) {
   padding-top: 32px;
   border-top: 2px solid #b3b3b3;
 }
-.modal-add__message {
-  display: none;
-  padding-top: 21px;
-}
-.modal-add__message--ok {
-  color: #1D6154;
-}
-.modal-add__message--error {
-  color: #B1663C;
-}
 
 .photo-upload {
   flex-direction: column;
@@ -591,11 +586,9 @@ html:has(dialog[open]) {
 .photo__title {
   padding: 30px 0 10px;
 }
-
 .photo__category {
   padding: 21px 0 10px;
 }
-
 .photo-label {
   display: flex;
   flex-direction: column;

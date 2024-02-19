@@ -8,6 +8,7 @@
 
 
 // Global
+
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -30,6 +31,7 @@ select {
 
 
 // Form
+
 .section-form {
 	max-width: 380px;
 	margin: auto;
@@ -64,6 +66,7 @@ select {
 
 
 // Contact
+
 .section-form--contact {
 	padding: 40px 20px;
 	@include b.bp(medium) {
@@ -73,12 +76,13 @@ select {
 
 
 // CTA
+
 .cta {
 	font-family: 'Syne';
 	font-size: 14px;
 	font-weight: 700;
 	text-align: center;
-	margin : 2em auto ;
+	margin : 2rem auto 1rem ;
 	padding: 9px 15px;
 	border-radius: 60px;
 	border: none;
@@ -136,18 +140,19 @@ select {
 }
 
 
-/* Login */
+// Login
 
 .section-form--login {
 	@extend %flex--center;
 	flex-direction: column;
 	padding: 50px 0;
 	@include b.bp(medium) {
-		padding: 150px 0;
+		padding: 75px 0;
 	}
 
 	& a {
 		text-decoration: underline;
+		padding-top: 15px;
 	}
 }
 
@@ -156,7 +161,7 @@ select {
 }
 
 
-/* Banner editor mode */
+// Banner editor mode
 
 .banner-editor-mode {
 	@extend %flex--center;
@@ -171,11 +176,23 @@ select {
 	}
 }
 
-/* Default is-logged-out */
 .visitor-mode {
-	display: block;
+	display: block; // Default is-logged-out
 }
 
 .editor-mode {
 	display: none;
+}
+
+
+// Gestion des messages
+
+.message--ok {
+	padding-top: 21px;
+	color: #1D6154;
+}
+
+.message--error {
+	padding-top: 21px;
+	color:#B1663C;
 }

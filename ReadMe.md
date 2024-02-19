@@ -18,4 +18,4 @@
 - Étape 3.3 : Envoi d'un nouveau projet au back-end via le formulaire de la modale
 - Étape 3.4 : Traitement de la réponse de l'API pour afficher dynamiquement la nouvelle image de la modale
 
-4. [ ] Étape 4 : Vérifiez l'ensemble du projet et s'assurer du traitement des erreurs dans les formulaires
+4. [X] Étape 4 : Vérifiez l'ensemble du projet et s'assurer du traitement des erreurs dans les formulaires

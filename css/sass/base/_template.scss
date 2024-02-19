@@ -24,7 +24,8 @@
 	margin: 50px auto;
 }
 
-// $Breakpoints
+
+// Breakpoints
 
 @mixin bp($point) {
   @if $point == large {
@@ -38,10 +39,6 @@
   }    
 }
 
-// @include a.bp(medium) {}
-// @include a.bp(small/medium) {}
-// @include a.bp(large) {}
-
 
 // Header
 
@@ -52,7 +49,6 @@ header {
 	@include bp(medium) {
 		flex-direction: row;
 		justify-content: space-between;
-
 	}
 }
 
@@ -71,7 +67,6 @@ nav {
 		@include bp(medium) {
 			padding-left: 44px;
 		}
-
 		& a:hover {
 			color: #B1663C;
 		}
@@ -93,10 +88,12 @@ nav {
 	& figure {
 		flex: 1;
 	}
+
 	& img {
 		display: block;
 		margin: auto;
 	}
+
 	& article {
 		flex: 1;
 		padding: 0 20px;
@@ -104,9 +101,11 @@ nav {
 			padding: 0;
 		}
 	}
+
 	& h2 {
 		margin-bottom: 1em;
 	}
+
 	& p {
 		margin-bottom: 0.5em;
 	}
@@ -129,8 +128,8 @@ footer {
 		justify-content: flex-end;
 		margin: 2em
 	}
-}
 
-.footer-login {
-	margin-top: 300px;
+	&-login {
+		margin-top: 300px;
+	}
 }

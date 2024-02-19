@@ -6,18 +6,17 @@
 
 @use '../base' as b;
 
-// @extend %flex--center;
-// @extend %flex-a--center;
 
+// Navigation
 
-// 
 .modal__page--1 {display: block;}
 
-// nav--back
 .modal__nav--back,
 .modal__page--2 {display: none;}
 
+
 // @Adam Argyle : le défilement est bloqué lorsque le dialog est ouvert
+
 html:has(dialog[open]) {
   overflow: hidden;
 }
@@ -67,14 +66,19 @@ html:has(dialog[open]) {
 }
 
 
+// Page 1
+
 .modal-delete {
 
   &__gallery {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 9px;
     grid-row-gap: 28px;
     @include b.bp(medium) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    @include b.bp(large) {
       grid-template-columns: repeat(5, 1fr);
     }
   }
@@ -118,9 +122,10 @@ html:has(dialog[open]) {
   &__cta {
     margin: 0;
   }
-  
 }
 
+
+// Page 2
 
 .modal-add {
 
@@ -139,19 +144,6 @@ html:has(dialog[open]) {
     margin-top: 47px;
     padding-top: 32px;
     border-top: 2px solid #b3b3b3;
-  }
-
-  &__message {
-    display: none;
-    padding-top: 21px;
-
-    &--ok {
-      color: #1D6154;
-    }
-
-    &--error {
-      color:#B1663C;
-    }
   }
 }
 
@@ -183,31 +175,34 @@ html:has(dialog[open]) {
   }
 }
 
-.photo__title {
-  padding: 30px 0 10px;
-}
+.photo {
 
-.photo__category {
-  padding: 21px 0 10px;
-}
-
-.photo-label {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-
-  &__button {
-    background-color: #CBD6DC;
-    color: #306685;
-    padding: 10px 33px;
-    border-radius: 50px;
-    border: none;
+  &__title {
+    padding: 30px 0 10px;
   }
 
-  &--uploaded {
-    max-height: 166px;
-    object-fit: contain;
+  &__category {
+    padding: 21px 0 10px;
+  }
+
+  &-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &__button {
+      background-color: #CBD6DC;
+      color: #306685;
+      padding: 10px 33px;
+      border-radius: 50px;
+      border: none;
+    }
+
+    &--uploaded {
+      max-height: 166px;
+      object-fit: contain;
+    }
   }
 }
