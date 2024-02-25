@@ -51,6 +51,7 @@ function createWorksWrapper(works) {
     // Modal section
     const modalFigure = document.createElement("figure");
     modalFigure.classList.add("modal-delete__figure");
+    modalFigure.id = work.id;
     modalFigure.dataset.id = work.id;
     const modalImage = document.createElement("img");
     modalImage.src = work.imageUrl;
@@ -81,10 +82,13 @@ function createWorksWrapper(works) {
       })
       .then(response => {
         if (response.ok) {
-          if (modalFigure.dataset.id = id) {
-            modalFigure.remove();
+          if (modalFigure.id = id) {
+            console.log(modalFigure.id);
+            works = works.filter(work => work.id !== modalFigure.id);
+            console.log(works); 
           }
-          fetchWorks();
+          //fetchWorks();
+          //createWorksWrapper(works);
           messageOk("Le projet a bien été supprimé.");
         } else {
           messageError("Une erreur s'est produite. Merci d'essayer à nouveau ou de contacter l'administration du site.");
@@ -199,7 +203,7 @@ const fileButton = document.querySelector(".photo-label__button");
 const fileDetails = document.querySelector(".photo-upload__details");
 
 // Event listeners
-fileInput.addEventListener("change", function () {
+/* fileInput.addEventListener("change", function () {
   const fileUploaded = document.createElement("img");
   fileUploaded.classList.add("photo-label--uploaded");
   labelWrapper.appendChild(fileUploaded);
@@ -208,11 +212,27 @@ fileInput.addEventListener("change", function () {
   fileButton.style.display = "none";
   fileDetails.style.display = "none";
   validateProject();
-})
+}) */
 
-fileTitle.addEventListener("change", function () {
+fileInput.addEventListener("change", function () {
+  if (!document.querySelector(".photo-label--uploaded")) {
+    const fileUploaded = document.createElement("img");
+    fileUploaded.classList.add("photo-label--uploaded");
+    labelWrapper.appendChild(fileUploaded);
+    fileUploaded.src = window.URL.createObjectURL(this.files[0]); // URL du fichier ajouté
+    console.log("IMG is created");
+  } else {
+    const fileUploaded = document.querySelector(".photo-label--uploaded");
+    fileUploaded.src = window.URL.createObjectURL(this.files[0]); // URL du fichier ajouté
+    console.log("IMG already existed");
+  }
+  filePlaceholder.style.display = "none";
+  fileButton.style.display = "none";
+  fileDetails.style.display = "none";
   validateProject();
 })
+
+fileTitle.addEventListener("keyup", validateProject);
 
 let fileCategoryValue = "Sélectionner une catégorie";
 fileCategory.addEventListener("change", (event) => {
@@ -222,22 +242,42 @@ fileCategory.addEventListener("change", (event) => {
 
 // Vérification des champs avant l'ajout d'un projet
 function validateProject() {
-  if (fileInput.files.length == 0 || fileTitle.value == "" || fileCategoryValue == "Sélectionner une catégorie") {
-    validateButton.disabled = true;
-    messageError("Merci de remplir tous les champs.");
-  } else {
+  const file = fileInput.files[0];
+  const maxFileSize = 4194304;
+  if (
+    fileTitle.value !== "" 
+    && fileCategoryValue !== "Sélectionner une catégorie" 
+    && fileInput.files.length > 0 
+    && fileInput.files[0].size <= maxFileSize) {
+    console.log(fileTitle.value);
+    console.log(fileCategoryValue);
+    console.log(fileInput.files[0].size);
     validateButton.removeAttribute("disabled");
     messageOk("Tous les champs ont bien été remplis.");
+  } else if (fileInput.files.length > 0) { 
+    if (file.size > maxFileSize) {
+      console.log(file.size);
+      validateButton.disabled = true;
+      messageError("Le fichier sélectionné dépasse le poids maximum de 4mo.");
+    } 
+    if (file.type != "image/jpg" && file.type != "image/png" && file.type != "image/jpeg") {
+      console.log(file.type);
+      messageError("Le fichier sélectionné n'est pas au format jpg ou png.");
+      resetPhoto();
+    } 
+  } else {
+    validateButton.disabled = true;
+    messageError("Merci de remplir tous les champs.");
   }
 }
 
 // Réinitialisation du champ d'upload de fichier
 function resetPhoto() {
-  const fileDisplayed = document.querySelector(".photo-label--uploaded");
-  fileDisplayed.style.display = "none";
+  const fileUploaded = document.querySelector(".photo-label--uploaded");
+  fileUploaded.style.display = "none";
   filePlaceholder.style.display = "block";
   fileButton.style.display = "block";
-  fileDetails.style.display = "block";
+  fileDetails.style.display = "block"; 
 }
 
 // Envoi d'un nouveau projet
@@ -258,7 +298,8 @@ async function sendNewWork() {
     })
     .then(response => {
       if (response.ok) {
-        fetchWorks();
+        createWorksWrapper(works);
+        //fetchWorks();
         messageOk("Le nouveau projet a bien été ajouté.");
       } else {
         messageError("Une erreur s'est produite. Merci d'essayer à nouveau ou de contacter l'administration du site.");
