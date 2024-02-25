@@ -39,6 +39,7 @@ function createWorksWrapper(works) {
     // Portfolio section
     const portfolioFigure = document.createElement("figure");
     portfolioFigure.id = work.categoryId;
+    portfolioFigure.dataset.id = work.id;
     const portfolioImage = document.createElement("img");
     portfolioImage.src = work.imageUrl;
     portfolioImage.setAttribute("alt", work.title);
@@ -52,7 +53,6 @@ function createWorksWrapper(works) {
     const modalFigure = document.createElement("figure");
     modalFigure.classList.add("modal-delete__figure");
     modalFigure.id = work.id;
-    modalFigure.dataset.id = work.id;
     const modalImage = document.createElement("img");
     modalImage.src = work.imageUrl;
     modalImage.setAttribute("alt", work.title);
@@ -84,11 +84,10 @@ function createWorksWrapper(works) {
         if (response.ok) {
           if (modalFigure.id = id) {
             console.log(modalFigure.id);
-            works = works.filter(work => work.id !== modalFigure.id);
-            console.log(works); 
+            const portfolioFigure = document.querySelector(`figure[data-id="${id}"]`);
+            modalFigure.remove();
+            portfolioFigure.remove();
           }
-          //fetchWorks();
-          //createWorksWrapper(works);
           messageOk("Le projet a bien été supprimé.");
         } else {
           messageError("Une erreur s'est produite. Merci d'essayer à nouveau ou de contacter l'administration du site.");
@@ -203,17 +202,6 @@ const fileButton = document.querySelector(".photo-label__button");
 const fileDetails = document.querySelector(".photo-upload__details");
 
 // Event listeners
-/* fileInput.addEventListener("change", function () {
-  const fileUploaded = document.createElement("img");
-  fileUploaded.classList.add("photo-label--uploaded");
-  labelWrapper.appendChild(fileUploaded);
-  fileUploaded.src = window.URL.createObjectURL(this.files[0]); // URL du fichier ajouté
-  filePlaceholder.style.display = "none";
-  fileButton.style.display = "none";
-  fileDetails.style.display = "none";
-  validateProject();
-}) */
-
 fileInput.addEventListener("change", function () {
   if (!document.querySelector(".photo-label--uploaded")) {
     const fileUploaded = document.createElement("img");
@@ -284,11 +272,33 @@ function resetPhoto() {
 async function sendNewWork() {
 
   validateButton.addEventListener("click", (event) => {
-    const formData = new FormData(); // Construction d'un objet FormData
+
+    // Construction d'un objet FormData
+    const formData = new FormData(); 
     formData.append("image", fileInput.files[0]);
     formData.append("title", fileTitle.value);
     formData.append("category", fileCategory.value);
 
+    // Construction d'un nouveau projet
+    const modalSection = document.querySelector(".modal-delete__gallery"); 
+    const newObject = document.createElement("figure");
+    newObject.classList.add("modal-delete__figure");
+    const newObjectImage = document.createElement("img");
+    const fileUploaded = document.querySelector(".photo-label--uploaded");
+    newObjectImage.src = fileUploaded.src;
+    newObjectImage.classList.add("modal-delete__image");
+    const modalTrashWrapper = document.createElement("span");
+    modalTrashWrapper.classList.add("modal-delete__icon");
+    const modalTrashIcon = document.createElement("img");
+    modalTrashIcon.src = "assets/icons/trash.svg";
+    modalTrashIcon.classList.add("modal-delete__trash");
+    const portfolioSection = document.querySelector(".gallery");
+    const newPortfolioObject = document.createElement("figure");
+    const newPortfolioImage = document.createElement("img");
+    newPortfolioImage.src = fileUploaded.src;
+    const newPortfolioTitle = document.createElement("figcaption");
+    newPortfolioTitle.innerText = fileTitle.value;
+  
     fetch(api + "works", {
       method: "POST",
       headers: {
@@ -298,9 +308,16 @@ async function sendNewWork() {
     })
     .then(response => {
       if (response.ok) {
-        createWorksWrapper(works);
-        //fetchWorks();
         messageOk("Le nouveau projet a bien été ajouté.");
+        createWorksWrapper(works);
+        modalSection.appendChild(newObject);
+        newObject.appendChild(newObjectImage);
+        newObject.appendChild(modalTrashWrapper);
+        modalTrashWrapper.appendChild(modalTrashIcon);    
+        portfolioSection.appendChild(newPortfolioObject);
+        newPortfolioObject.appendChild(newPortfolioImage);
+        newPortfolioObject.appendChild(newPortfolioTitle);
+
       } else {
         messageError("Une erreur s'est produite. Merci d'essayer à nouveau ou de contacter l'administration du site.");
       }
