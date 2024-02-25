@@ -209,6 +209,7 @@ fileInput.addEventListener("change", function () {
     labelWrapper.appendChild(fileUploaded);
     fileUploaded.src = window.URL.createObjectURL(this.files[0]); // URL du fichier ajouté
     console.log("IMG is created");
+    messageError("Merci de remplir tous les champs.");
   } else {
     const fileUploaded = document.querySelector(".photo-label--uploaded");
     fileUploaded.src = window.URL.createObjectURL(this.files[0]); // URL du fichier ajouté
@@ -230,39 +231,49 @@ fileCategory.addEventListener("change", (event) => {
 
 // Vérification des champs avant l'ajout d'un projet
 function validateProject() {
+  const validExtension = ["image/jpg", "image/png", "image/jpeg"];
   const file = fileInput.files[0];
   const maxFileSize = 4194304;
+  modalForm.appendChild(message);
   if (
-    fileTitle.value !== "" 
-    && fileCategoryValue !== "Sélectionner une catégorie" 
-    && fileInput.files.length > 0 
-    && fileInput.files[0].size <= maxFileSize) {
+    fileTitle.value !== "" && 
+    fileCategoryValue !== "Sélectionner une catégorie" && 
+    fileInput.files.length > 0 && 
+    fileInput.files[0].size <= maxFileSize &&
+    validExtension.includes(file.type) ) {
     console.log(fileTitle.value);
     console.log(fileCategoryValue);
     console.log(fileInput.files[0].size);
-    validateButton.removeAttribute("disabled");
+    validateButton.removeAttribute("disabled");    
     messageOk("Tous les champs ont bien été remplis.");
-  } else if (fileInput.files.length > 0) { 
-    if (file.size > maxFileSize) {
-      console.log(file.size);
-      validateButton.disabled = true;
-      messageError("Le fichier sélectionné dépasse le poids maximum de 4mo.");
-    } 
-    if (file.type != "image/jpg" && file.type != "image/png" && file.type != "image/jpeg") {
-      console.log(file.type);
-      messageError("Le fichier sélectionné n'est pas au format jpg ou png.");
-      resetPhoto();
-    } 
   } else {
     validateButton.disabled = true;
-    messageError("Merci de remplir tous les champs.");
+    if (fileInput.files.length > 0) {
+      if (file.size > maxFileSize) {
+        console.log(file.size);
+        messageError("Le fichier sélectionné dépasse le poids maximum de 4mo.");
+      }
+      if (
+        file.type != "image/jpg" &&
+        file.type != "image/png" &&
+        file.type != "image/jpeg"
+      ) {
+        console.log(file.type);
+        messageError("Le fichier sélectionné n'est pas au format jpg ou png.");
+        filePlaceholder.style.display = "block";
+        fileButton.style.display = "block";
+        fileDetails.style.display = "block"; 
+      }
+    } else {
+      messageError("Merci de remplir tous les champs.");
+    }
   }
 }
 
 // Réinitialisation du champ d'upload de fichier
 function resetPhoto() {
   const fileUploaded = document.querySelector(".photo-label--uploaded");
-  fileUploaded.style.display = "none";
+  fileUploaded.remove();
   filePlaceholder.style.display = "block";
   fileButton.style.display = "block";
   fileDetails.style.display = "block"; 
@@ -273,31 +284,10 @@ async function sendNewWork() {
 
   validateButton.addEventListener("click", (event) => {
 
-    // Construction d'un objet FormData
-    const formData = new FormData(); 
+    const formData = new FormData(); // Construction d'un objet FormData
     formData.append("image", fileInput.files[0]);
     formData.append("title", fileTitle.value);
     formData.append("category", fileCategory.value);
-
-    // Construction d'un nouveau projet
-    const modalSection = document.querySelector(".modal-delete__gallery"); 
-    const newObject = document.createElement("figure");
-    newObject.classList.add("modal-delete__figure");
-    const newObjectImage = document.createElement("img");
-    const fileUploaded = document.querySelector(".photo-label--uploaded");
-    newObjectImage.src = fileUploaded.src;
-    newObjectImage.classList.add("modal-delete__image");
-    const modalTrashWrapper = document.createElement("span");
-    modalTrashWrapper.classList.add("modal-delete__icon");
-    const modalTrashIcon = document.createElement("img");
-    modalTrashIcon.src = "assets/icons/trash.svg";
-    modalTrashIcon.classList.add("modal-delete__trash");
-    const portfolioSection = document.querySelector(".gallery");
-    const newPortfolioObject = document.createElement("figure");
-    const newPortfolioImage = document.createElement("img");
-    newPortfolioImage.src = fileUploaded.src;
-    const newPortfolioTitle = document.createElement("figcaption");
-    newPortfolioTitle.innerText = fileTitle.value;
   
     fetch(api + "works", {
       method: "POST",
@@ -306,19 +296,15 @@ async function sendNewWork() {
       },
       body: formData
     })
+    .then(response => response.json()) // Récupération de l'objet au format JSON
     .then(response => {
-      if (response.ok) {
+      if (response.id) {
+        works.push(response); // Ajout de l'objet au tableau des projets
         messageOk("Le nouveau projet a bien été ajouté.");
         createWorksWrapper(works);
-        modalSection.appendChild(newObject);
-        newObject.appendChild(newObjectImage);
-        newObject.appendChild(modalTrashWrapper);
-        modalTrashWrapper.appendChild(modalTrashIcon);    
-        portfolioSection.appendChild(newPortfolioObject);
-        newPortfolioObject.appendChild(newPortfolioImage);
-        newPortfolioObject.appendChild(newPortfolioTitle);
-
+        validateButton.disabled = true;
       } else {
+        validateButton.disabled = true;
         messageError("Une erreur s'est produite. Merci d'essayer à nouveau ou de contacter l'administration du site.");
       }
     })

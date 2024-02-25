@@ -45,7 +45,7 @@ export function navigateModal() {
     })
     page1Items.forEach(page1Item => { // Le contenu de la page 1 est masqué
       page1Item.style.display = "none";
-    })  
+    })
   })
 
   buttonBack.addEventListener("click", () => {
